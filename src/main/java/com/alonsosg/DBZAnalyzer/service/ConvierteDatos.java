@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConvierteDatos implements IConvierteDatos{
     private ObjectMapper objectMapper = new ObjectMapper();
+    
     @Override
     public <T> T obtenerDatos(String json, Class<T> clase) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerDatos'");
+        try {
+            return objectMapper.readValue(json, clase);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al convertir datos JSON a objeto: " + e.getMessage(), e);
+        }
     }
     
 }
