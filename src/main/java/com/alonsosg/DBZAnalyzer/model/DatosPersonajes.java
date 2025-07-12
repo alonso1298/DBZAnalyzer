@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record DatosPersonajes(
         @JsonAlias("id") Integer id,
         @JsonAlias("name") String nombre,
-        @JsonAlias("ki") Double ki,
+        @JsonAlias("ki") String ki,
         @JsonAlias("race") String raza,
         @JsonAlias("gender") String genero,
         @JsonAlias("description") String descripcion
