@@ -1,4 +1,8 @@
 package com.alonsosg.DBZAnalyzer.model;
 
-public record Items() {
+import java.util.List;
+
+public record Items(
+        List<DatosPersonajes> items
+) {
 }
