@@ -11,6 +11,8 @@ public record DatosPersonajes(
         @JsonAlias("name") String nombre,
         @JsonDeserialize(using = KiDeserializer.class)
         @JsonAlias("ki") Double ki,
+        @JsonDeserialize(using = KiDeserializer.class)
+        @JsonAlias("maxKi") Double maxKi,
         @JsonAlias("race") String raza,
         @JsonAlias("gender") String genero,
         @JsonAlias("description") String descripcion
