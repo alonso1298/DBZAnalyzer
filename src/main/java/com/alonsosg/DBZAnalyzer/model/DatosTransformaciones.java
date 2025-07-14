@@ -6,16 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record DatosPersonajeDetalle(
+public record DatosTransformaciones(
     @JsonAlias("id") Integer id,
     @JsonAlias("name") String nombre,
-    @JsonDeserialize(using = KiDeserializer.class)
-    @JsonAlias("ki") Double ki,
-    @JsonDeserialize(using = KiDeserializer.class)
-    @JsonAlias("maxKi") Double maxKi,
-    String race,
-    String gender,
-    String description,
-    String image,
-    String affiliation,
+    @JsonAlias("ki") @JsonDeserialize(using = KiDeserializer.class) Double ki
 ){}
