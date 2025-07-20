@@ -1,5 +1,8 @@
 package com.alonsosg.DBZAnalyzer.principal;
 
+import java.util.List;
+import java.util.Scanner;
+
 // import java.util.Scanner;
 
 import com.alonsosg.DBZAnalyzer.model.DatosItems;
@@ -13,7 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Principal {
-    // private Scanner teclado = new Scanner(System.in);
+    private Scanner teclado = new Scanner(System.in);
     private ConsumoAPI consumoAPI = new ConsumoAPI();
     private final String URL_BASE = "https://dragonball-api.com/api/";
     ObjectMapper objectMapper = new ObjectMapper();
@@ -22,9 +25,11 @@ public class Principal {
     public void muestraMenu() throws JsonMappingException, JsonProcessingException{
         // Busca los datos generales de los personajes
         System.out.println("Datos de los personajes");
-        String json = consumoAPI.obtenerDatos(URL_BASE + "characters/");
+        String json = consumoAPI.obtenerDatos(URL_BASE + "characters?limit=70");
         DatosItems<DatosPersonajes> datosPersonajes = objectMapper.readValue(json, new TypeReference<DatosItems<DatosPersonajes>>() {});
-        System.out.println(datosPersonajes);
+        // System.out.println(datosPersonajes);
+
+        List<DatosPersonajes> personajes = datosPersonajes.items();
 
         System.out.println("\n Top 10 personajes mas fuertes");
         datosPersonajes.items().stream()
@@ -32,6 +37,20 @@ public class Principal {
             .sorted((p1, p2) -> Double.compare(p2.maxKi(), p1.maxKi()))
             .limit(10)
             .forEach(p -> System.out.println("Nombre: " + p.nombre() + " Ki Maximo: " + p.maxKi()));
+
+        System.out.println("\nEscribe el nombre del personaje a buscar:");
+                String nombreBuscado = teclado.nextLine();
+
+                personajes.stream()
+                    .filter(p -> p.nombre().toLowerCase().contains(nombreBuscado.toLowerCase()))
+                    .findFirst()
+                    .ifPresentOrElse(
+                        p -> {
+                            System.out.println("\n Personaje encontrado:");
+                            System.out.printf("\nNombre: " + p.nombre() + ", Poder maximo: " + p.maxKi() + ", Raza: " + p.raza());
+                        },
+                        () -> System.out.println("Personaje no encontrado.")
+                    );
 
         System.out.println("\n Datos de los planetas");
         json = consumoAPI.obtenerDatos(URL_BASE + "planets/");
