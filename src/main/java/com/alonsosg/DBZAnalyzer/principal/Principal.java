@@ -26,7 +26,14 @@ public class Principal {
         DatosItems<DatosPersonajes> datosPersonajes = objectMapper.readValue(json, new TypeReference<DatosItems<DatosPersonajes>>() {});
         System.out.println(datosPersonajes);
 
-        System.out.println("Datos de los planetas");
+        System.out.println("\n Top 10 personajes mas fuertes");
+        datosPersonajes.items().stream()
+            .filter(p -> p.maxKi() > 0)
+            .sorted((p1, p2) -> Double.compare(p2.maxKi(), p1.maxKi()))
+            .limit(10)
+            .forEach(p -> System.out.println("Nombre: " + p.nombre() + " Ki Maximo: " + p.maxKi()));
+
+        System.out.println("\n Datos de los planetas");
         json = consumoAPI.obtenerDatos(URL_BASE + "planets/");
         DatosItems<DatosPlanetas> datosPlanetas = objectMapper.readValue(json, new TypeReference<DatosItems<DatosPlanetas>>() {});
         System.out.println(datosPlanetas);
