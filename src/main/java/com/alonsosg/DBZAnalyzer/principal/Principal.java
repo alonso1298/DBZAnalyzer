@@ -59,7 +59,6 @@ public class Principal {
 
         System.out.println("\nEstadísticas generales");
 
-        // Total de personajes
         System.out.println("Total de personajes: " + datosPersonajes.items().size());
 
         // Personaje más fuerte
@@ -80,5 +79,5 @@ public class Principal {
             .filter(p -> p.transformaciones() != null && !p.transformaciones().isEmpty())
             .count();
         System.out.println("Personajes con transformación: " + conTransformacion);
-            }    
+    }    
 }
