@@ -59,23 +59,23 @@ public class Principal {
 
         System.out.println("\nEstadísticas generales");
 
-        // 1. Total de personajes
+        // Total de personajes
         System.out.println("Total de personajes: " + datosPersonajes.items().size());
 
-        // 3. Personaje más fuerte
+        // Personaje más fuerte
         datosPersonajes.items().stream()
             .filter(p -> p.maxKi() > 0)
             .max((p1, p2) -> Double.compare(p1.maxKi(), p2.maxKi()))
             .ifPresent(p -> System.out.println("Personaje más fuerte: " + p.nombre() + " con Ki " + p.maxKi()));
 
-        // 4. Conteo por raza
+        // Conteo por raza
         System.out.println("\nCantidad de personajes por raza:");
         datosPersonajes.items().stream()
             .filter(p -> p.raza() != null && !p.raza().isEmpty())
             .collect(Collectors.groupingBy(DatosPersonajes::raza, Collectors.counting()))
             .forEach((raza, cantidad) -> System.out.println("- " + raza + ": " + cantidad));
 
-        // 5. Personajes con transformación
+        // Personajes con transformación
         long conTransformacion = datosPersonajes.items().stream()
             .filter(p -> p.transformaciones() != null && !p.transformaciones().isEmpty())
             .count();
